@@ -1,1 +1,125 @@
-<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Community | PimIncGames</title><link rel="stylesheet" href="styles.css"></head><body data-page="community"><header class="top"><div class="wrap nav"><a class="brand" href="index.html">◈ PimIncGames</a><nav class="links"><a data-nav="games" href="games.html">Games</a><a data-nav="community" href="community.html">Community</a><a data-nav="about" href="about.html">About</a></nav><div class="navright"><button id="themeToggle" class="theme">☼ <span id="themeLabel">Light</span></button><div id="authCorner"><a class="btn" href="account.html">Sign in</a></div></div></div></header><main class="wrap"><section class="pagehead"><div class="eyebrow">Community / 02</div><h1>Pull up a chair<span class="gradient">.</span></h1><p class="lead">Share thoughts, ask questions, and talk about PimIncGames projects.</p><div class="notice">Sign in with Google to post and reply. The site owner must finish Firebase setup for shared posts.</div></section><section class="two section"><div class="panel"><h2>Start a conversation</h2><form id="postForm" class="form"><label>Title<input class="input" id="postTitle" maxlength="100" required placeholder="What's on your mind?"></label><label>Message<textarea class="input" id="postBody" maxlength="3000" required placeholder="Share an idea or question…"></textarea></label><button class="btn primary">Publish post</button><div id="postStatus" class="status"></div></form></div><div><div class="eyebrow">Live feed</div><h2>Recent discussions</h2><div id="postFeed"><div class="panel">Loading community…</div></div></div></section></main><footer class="footer"><div class="wrap foot"><span>◈ PimIncGames · © <span id="year"></span></span><div class="footlinks"><a href="games.html">Games</a><a href="community.html">Community</a><a href="about.html">About</a></div></div></footer><script type="module" src="app.js"></script></body></html>
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Community | PimIncGames</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-page="community">
+
+    <header class="top">
+        <div class="wrap nav">
+
+            <a class="brand" href="index.html">◈ PimIncGames</a>
+
+            <nav class="links">
+                <a data-nav="games" href="games.html">Games</a>
+                <a data-nav="community" href="community.html">Community</a>
+                <a data-nav="about" href="about.html">About</a>
+            </nav>
+
+            <div class="navright">
+                <button id="themeToggle" class="theme">
+                    ☼ <span id="themeLabel">Light</span>
+                </button>
+
+                <div id="authCorner">
+                    <a class="btn" href="account.html">Sign in</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="wrap">
+
+        <section class="pagehead">
+            <div class="eyebrow">Community / 02</div>
+
+            <h1>
+                Pull up a chair<span class="gradient">.</span>
+            </h1>
+
+            <p class="lead">
+                Share thoughts, ask questions, and talk about PimIncGames projects.
+            </p>
+
+            <div class="notice">
+                Sign in with Google to post and reply. The site owner must finish Firebase setup for shared posts.
+            </div>
+        </section>
+
+        <section class="two section">
+
+            <div class="panel">
+                <h2>Start a conversation</h2>
+
+                <form id="postForm" class="form">
+
+                    <label>
+                        Title
+                        <input
+                            class="input"
+                            id="postTitle"
+                            maxlength="100"
+                            required
+                            placeholder="What's on your mind?"
+                        >
+                    </label>
+
+                    <label>
+                        Message
+                        <textarea
+                            class="input"
+                            id="postBody"
+                            maxlength="3000"
+                            required
+                            placeholder="Share an idea or question…"
+                        ></textarea>
+                    </label>
+
+                    <button class="btn primary">Publish post</button>
+
+                    <div id="postStatus" class="status"></div>
+
+                </form>
+            </div>
+
+            <div>
+                <div class="eyebrow">Live feed</div>
+
+                <h2>Recent discussions</h2>
+
+                <div id="postFeed">
+                    <div class="panel">Loading community…</div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="wrap foot">
+
+            <span>
+                ◈ PimIncGames · © <span id="year"></span>
+            </span>
+
+            <div class="footlinks">
+                <a href="games.html">Games</a>
+                <a href="community.html">Community</a>
+                <a href="about.html">About</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+
+</body>
+</html>
