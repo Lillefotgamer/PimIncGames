@@ -5,9 +5,9 @@ import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} f
 import {getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,doc,setDoc,limit} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const games=[
-{id:'skyward-islands',name:'Skyward Islands',desc:"Explore floating worlds, solve puzzles, and discover what's above the clouds.",status:'In development',glyph:'✦',style:''},
-{id:'neon-drift',name:'Neon Drift',desc:'A fast-paced reflex game set in a luminous digital world.',status:'Experiment',glyph:'⌁',style:'neon'},
-{id:'project-aura',name:'Project Aura',desc:'A quiet adventure about exploration, little discoveries, and hidden places.',status:'Coming soon',glyph:'☾',style:'aura'}];
+{id:'pimening',name:'The Pimening',desc:"Explore various unique mazes and environments, meet different characters, and discover what a good game looks like.",status:'In development',glyph:'✦',style:''},
+{id:'cookie-clicker-deluxe',name:'Cookie Clicker But Budget Deluxe',desc:'A simple but good Cookie Clicker-style game with more than meets the eye.',status:'Demo',glyph:'⌁',style:'neon'},
+{id:'piano-boss-remastered',name:'Piano Boss Fight Remastered',desc:'A retro endless survival boss fight adventure against a sentient piano-try to see how long you will last!',status:'Experiment',glyph:'☾',style:'aura'}];
 let auth,db,user=null,ready=false;
 if(firebaseConfig.apiKey&&!firebaseConfig.apiKey.includes('PASTE_')){try{const a=initializeApp(firebaseConfig);auth=getAuth(a);db=getFirestore(a);ready=true;onAuthStateChanged(auth,u=>{user=u;renderCorner();renderAccount();if(document.body.dataset.page==='community')loadPosts()})}catch(e){console.error(e)}}
 const status=(id,msg,err=false)=>{const e=document.getElementById(id);if(e){e.textContent=msg;e.className='status'+(err?' error':'')}};
