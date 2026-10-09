@@ -1,27 +1,134 @@
 rules_version = '2';
+
 service cloud.firestore {
- match /databases/{database}/documents {
-  function signedIn(){return request.auth != null;}
-  match /posts/{id} {
-   allow read: if true;
-   allow create: if signedIn() && request.resource.data.uid == request.auth.uid
-    && request.resource.data.title is string && request.resource.data.title.size() <= 100
-    && request.resource.data.body is string && request.resource.data.body.size() <= 3000;
-   allow update, delete: if signedIn() && resource.data.uid == request.auth.uid;
-   match /comments/{commentId} {
-    allow read: if true;
-    allow create: if signedIn() && request.resource.data.uid == request.auth.uid
-     && request.resource.data.body is string && request.resource.data.body.size() <= 1000;
-    allow update, delete: if signedIn() && resource.data.uid == request.auth.uid;
-   }
-  }
-  match /games/{gameId}/ratings/{userId} {
-   allow read: if true;
-   allow create, update: if signedIn() && request.auth.uid == userId
-    && request.resource.data.uid == request.auth.uid
-    && request.resource.data.value is number && request.resource.data.value >= 0.5
-    && request.resource.data.value <= 5 && request.resource.data.value * 2 % 1 == 0;
-   allow delete: if signedIn() && request.auth.uid == userId;
-  }
- }
+    match /databases/{database}/documents {
+        function signedIn() {
+            return request.auth != null;
+        }
+
+        // Staff documents must be created manually by the project owner in
+        // Firebase Console: staff/{uid} with { active: true }.
+        // Never allow clients to create or edit staff documents.
+        function isStaff() {
+            return signedIn()
+                && exists(/databases/$(database)/documents/staff/$(request.auth.uid))
+                && get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.active == true;
+        }
+
+        function ownsResource() {
+            return signedIn() && resource.data.uid == request.auth.uid;
+        }
+
+        match /staff/{staffUid} {
+            allow read: if signedIn() && request.auth.uid == staffUid;
+            allow write: if false;
+        }
+
+        match /profiles/{uid} {
+            allow read: if true;
+            allow create: if signedIn()
+                && request.auth.uid == uid
+                && request.resource.data.uid == uid
+                && request.resource.data.displayName is string
+                && request.resource.data.displayName.size() <= 40
+                && request.resource.data.photoURL is string
+                && request.resource.data.photoURL.size() <= 500
+                && request.resource.data.bio is string
+                && request.resource.data.bio.size() <= 300
+                && request.resource.data.earnedBadges is list
+                && request.resource.data.earnedBadges.size() == 0
+                && request.resource.data.selectedBadge == '';
+            allow update: if signedIn()
+                && request.auth.uid == uid
+                && request.resource.data.uid == resource.data.uid
+                && request.resource.data.displayName is string
+                && request.resource.data.displayName.size() <= 40
+                && request.resource.data.photoURL is string
+                && request.resource.data.photoURL.size() <= 500
+                && request.resource.data.bio is string
+                && request.resource.data.bio.size() <= 300
+                && request.resource.data.earnedBadges == resource.data.earnedBadges
+                && (
+                    request.resource.data.selectedBadge == ''
+                    || request.resource.data.selectedBadge in resource.data.earnedBadges
+                );
+            allow delete: if false;
+        }
+
+        match /posts/{postId} {
+            allow read: if true;
+            allow create: if signedIn()
+                && request.resource.data.uid == request.auth.uid
+                && request.resource.data.title is string
+                && request.resource.data.title.size() > 0
+                && request.resource.data.title.size() <= 100
+                && request.resource.data.body is string
+                && request.resource.data.body.size() > 0
+                && request.resource.data.body.size() <= 3000;
+            allow update: if (
+                ownsResource()
+                && request.resource.data.uid == resource.data.uid
+                && request.resource.data.title is string
+                && request.resource.data.title.size() > 0
+                && request.resource.data.title.size() <= 100
+                && request.resource.data.body is string
+                && request.resource.data.body.size() > 0
+                && request.resource.data.body.size() <= 3000
+            ) || (
+                isStaff()
+                && request.resource.data.uid == resource.data.uid
+            );
+            allow delete: if ownsResource() || isStaff();
+
+            match /comments/{commentId} {
+                allow read: if true;
+                allow create: if signedIn()
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.body is string
+                    && request.resource.data.body.size() > 0
+                    && request.resource.data.body.size() <= 1000;
+                allow update: if (
+                    ownsResource()
+                    && request.resource.data.uid == resource.data.uid
+                    && request.resource.data.body is string
+                    && request.resource.data.body.size() > 0
+                    && request.resource.data.body.size() <= 1000
+                ) || (
+                    isStaff()
+                    && request.resource.data.uid == resource.data.uid
+                );
+                allow delete: if ownsResource() || isStaff();
+            }
+        }
+
+        match /games/{gameId}/ratings/{userId} {
+            allow read: if true;
+            allow create, update: if signedIn()
+                && request.auth.uid == userId
+                && request.resource.data.uid == request.auth.uid
+                && request.resource.data.value is number
+                && request.resource.data.value >= 0.5
+                && request.resource.data.value <= 5
+                && request.resource.data.value * 2 % 1 == 0;
+            allow delete: if signedIn() && request.auth.uid == userId;
+        }
+
+        match /games/{gameId}/reviews/{userId} {
+            allow read: if true;
+            allow create, update: if signedIn()
+                && request.auth.uid == userId
+                && request.resource.data.uid == request.auth.uid
+                && request.resource.data.body is string
+                && request.resource.data.body.size() > 0
+                && request.resource.data.body.size() <= 2000
+                && request.resource.data.value is number
+                && request.resource.data.value >= 0.5
+                && request.resource.data.value <= 5
+                && request.resource.data.value * 2 % 1 == 0;
+            allow delete: if signedIn() && request.auth.uid == userId;
+        }
+
+        // Anonymous ratings are not implemented in this first pass.
+        // Add a separate abuse-protected mechanism before opening writes.
+    }
 }
