@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Player profile | PimIncGames</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body data-page="profile">
+        <header class="top">
+            <div class="wrap nav">
+                <a class="brand" href="index.html">◈ PimIncGames</a>
+                <nav class="links">
+                    <a data-nav="games" href="games.html">Games</a>
+                    <a data-nav="community" href="community.html">Community</a>
+                    <a data-nav="about" href="about.html">About</a>
+                </nav>
+                <div class="navright">
+                    <button id="themeToggle" class="theme">☼ <span id="themeLabel">Light</span></button>
+                    <div id="authCorner"><a class="btn" href="account.html">Sign in</a></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="wrap">
+            <section class="pagehead">
+                <div class="eyebrow">Community / Profile</div>
+                <div id="publicProfile"><div class="panel">Loading profile…</div></div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap foot">
+                <span>◈ PimIncGames · © <span id="year"></span></span>
+                <div class="footlinks">
+                    <a href="games.html">Games</a>
+                    <a href="community.html">Community</a>
+                    <a href="about.html">About</a>
+                </div>
+            </div>
+        </footer>
+        <script type="module" src="app.js"></script>
+    </body>
+</html>
