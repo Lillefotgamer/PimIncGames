@@ -4,7 +4,6 @@ import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase
 import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 import {getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,doc,setDoc,limit} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const games=[
 const games = [
     {
         id: 'pimening',
